@@ -68,13 +68,14 @@ class Script(Script):
         return None
 
     def process(self, p):
+        if not ('@' in p.prompt or '@' in p.negative_prompt):
+            return
+
         # Replace template tags
-        prompt = p.all_prompts[0]
         p.prompt = replace_template(self.tags, p.prompt)
         for i in range(len(p.all_prompts)):
             p.all_prompts[i] = p.prompt
 
-        negative_prompt = p.all_negative_prompts[0]
         p.negative_prompt = replace_template(self.tags, p.negative_prompt)
         for i in range(len(p.all_negative_prompts)):
             p.all_negative_prompts[i] = p.negative_prompt
