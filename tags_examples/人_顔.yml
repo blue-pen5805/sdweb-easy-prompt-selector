@@ -1,0 +1,78 @@
+目:
+  色:
+    黒: black eyes
+    白: white eyes
+    赤: red eyes
+    青: blue eyes
+    緑: green eyes
+    紫: purple eyes
+    銀色: silver eyes
+    金色: golden eyes
+    灰色: gray eyes
+    水色: aqua eyes
+    茶色: brown eyes
+    ピンク: pink eyes
+    オレンジ: orange eyes
+    オッドアイ: heterochromia
+  状態:
+    半目: half-closed eyes
+    閉じた目: closed eyes
+
+耳:
+  エルフ耳: elf ears
+  ケモミミ: animal ears
+  ネコミミ: cat ears
+  キツネ耳: fox ears
+
+表情:
+  笑い: smile
+  悲しい笑い: sad smile
+  邪悪な笑い: evil smile
+  天使の笑い: angelic smile
+  笑い（強制）: forced smile
+  蠱惑的な笑み: seductive smile
+  歯を見せる笑い: grin
+  歯を見せる笑い(邪悪): evil grin
+  ニヤニヤ: smirk
+  怒り: angry
+  悲しみ: sad
+  泣く: crying
+  涙: tears
+  恐怖: scared
+  真剣: serious
+  イライラ: annoyed
+  闇堕ち: dark persona
+  ドヤ顔: doyagao
+  頬染め: blush
+  頬染め(強): full-face blush
+  退屈: bored
+  罪悪感: guilt
+  無感情: expressionless
+  決意: determined
+  キス顔: incoming kiss
+  失望: disappointed
+  軽蔑: disdain
+  嫉妬: envy
+  嫌悪: disgust
+  困惑: confused
+  困り眉: troubled eyebrows
+  怒り眉: v-shaped eyebrows
+  羞恥: embarrassed
+  いたずら顔: naughty
+  眠気: sleepy
+
+口:
+  唇: lip
+  開いた口: open mouth
+  閉じた口: closed mouth
+  歯: teeth
+  出っ歯: buck teeth
+  上の歯: upper teeth
+  丸い歯: round teeth
+  ギザギザ歯: clenched teeth
+  牙: fang
+  舌舐めずり: licking lips
+  舌だし: tongue out
+  長舌: long tongue
+  てへぺろ: tehepero
+  よだれ: saliva
