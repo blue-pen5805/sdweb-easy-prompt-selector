@@ -43,6 +43,14 @@ def find_tag(tags, location):
 
     return value
 
+def replace_template(tags, prompt):
+    for match in re.finditer(r'(@([^>]+?)@)', prompt):
+        template = match.group(0)
+        value = find_tag(tags, template[1:-1].split(':'))
+        prompt = prompt.replace(template, value, 1)
+
+    return prompt
+
 class Script(Script):
     tags = {}
 
@@ -62,12 +70,11 @@ class Script(Script):
     def process(self, p):
         # Replace template tags
         prompt = p.all_prompts[0]
-
-        for match in re.finditer(r'(@([^>]+?)@)', p.prompt):
-            template = match.group(0)
-            value = find_tag(self.tags, template[1:-1].split(':'))
-            prompt = prompt.replace(template, value, 1)
-
-        p.prompt = prompt
+        p.prompt = replace_template(self.tags, p.prompt)
         for i in range(len(p.all_prompts)):
-            p.all_prompts[i] = prompt
+            p.all_prompts[i] = p.prompt
+
+        negative_prompt = p.all_negative_prompts[0]
+        p.negative_prompt = replace_template(self.tags, p.negative_prompt)
+        for i in range(len(p.all_negative_prompts)):
+            p.all_negative_prompts[i] = p.negative_prompt

@@ -1,7 +1,10 @@
-let visible = false
 const areaId = 'interactive-tag-selector'
 const selectId = 'interactive-tag-selector-select'
 const contentId = 'interactive-tag-selector-content'
+const toNegativePrompt = 'interactive-tag-selector-to-negative-prompt'
+
+let visible = false
+let toNegative = false
 
 async function readFile(filepath) {
   const response = await fetch(`file=${filepath}?${new Date().getTime()}`);
@@ -57,15 +60,24 @@ function createTagArea(tags = {}) {
   tagArea.innerHTML = `
     <div class="flex flex-col relative col">
       <div class="gr-block gr-box relative w-full border-solid border border-gray-200">
-        <select id="${selectId}" class="gr-box gr-input w-full">
-          <option>なし</option>
-        </select>
+        <div class="flex flex-row flex-wrap w-full gap-2" style="align-items: center;">
+          <select id="${selectId}" class="gr-box gr-input w-full" style="min-width: min(400px, 100%); flex: 3;">
+            <option>なし</option>
+          </select>
+          <div style="min-width: min(200px, 100%); flex: 1">
+            <label class="flex items-center text-gray-700 text-sm space-x-2 rounded-lg cursor-pointer dark:bg-transparent">
+              <input type="checkbox" id="${toNegativePrompt}" class="gr-check-radio gr-checkbox">
+              <span class="ml-2">ネガティブプロンプトに入力</span>
+            </label>
+          </div>
+        </div>
         <div id="${contentId}" class="flex flex-row flex-wrap"></div>
       </div>
     </div>
   `
   const select = tagArea.querySelector(`#${selectId}`)
   const content = tagArea.querySelector(`#${contentId}`)
+  const toNegativePromptCheckbox = tagArea.querySelector(`#${toNegativePrompt}`)
 
   Object.keys(tags).forEach((key) => {
     const values = tags[key]
@@ -95,6 +107,10 @@ function createTagArea(tags = {}) {
     })
   })
 
+  toNegativePromptCheckbox.addEventListener('change', (event) => {
+    toNegative = event.target.checked
+  })
+
 
   gradioApp().getElementById('txt2img_toprow').after(tagArea)
 }
@@ -105,7 +121,8 @@ function changeVisibility(node, visible) {
 }
 
 function addTag(tag) {
-  const textarea = gradioApp().getElementById('txt2img_prompt').querySelector('textarea')
+  const id = toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
+  const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
   if (textarea.value.trim() !== '' && textarea.value.trim().slice(-1) !== ',') { textarea.value += ', '}
   textarea.value += tag
