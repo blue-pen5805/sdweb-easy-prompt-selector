@@ -31,9 +31,7 @@ def find_tag(tags, location):
         for tag in location:
             value = value[tag]
 
-    if (type(value) == list):
-        value = random.choice(value)
-    elif (type(value) == dict):
+    if type(value) == dict:
         key = random.choice(list(value.keys()))
         tag = value[key]
         if type(tag) == dict:
@@ -41,13 +39,19 @@ def find_tag(tags, location):
         else:
             value = find_tag(value, key)
 
+    if (type(value) == list):
+        value = random.choice(value)
+
     return value
 
 def replace_template(tags, prompt):
     for match in re.finditer(r'(@([^>]+?)@)', prompt):
         template = match.group(0)
-        value = find_tag(tags, template[1:-1].split(':'))
-        prompt = prompt.replace(template, value, 1)
+        try:
+            value = find_tag(tags, template[1:-1].split(':'))
+            prompt = prompt.replace(template, value, 1)
+        except:
+            print('error!')
 
     return prompt
 
