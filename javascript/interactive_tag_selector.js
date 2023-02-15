@@ -4,7 +4,7 @@ const selectId = 'interactive-tag-selector-select'
 const contentId = 'interactive-tag-selector-content'
 
 async function readFile(filepath) {
-  const response = await fetch(`file=${filepath}`);
+  const response = await fetch(`file=${filepath}?${new Date().getTime()}`);
 
   return await response.text();
 }
