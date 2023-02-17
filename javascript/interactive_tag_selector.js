@@ -145,7 +145,7 @@ class InteractiveTagSelector {
     const tags = {}
     for (const path of paths) {
       const filename = path.split('/').pop().split('.').shift()
-      const data = await readFile(path)
+      const data = await this.readFile(path)
       yaml.loadAll(data, function (doc) {
         tags[filename] = doc
       })
