@@ -1,5 +1,6 @@
 from pathlib import Path
 import shutil
+import os
 
 from modules import scripts
 
@@ -11,6 +12,8 @@ TAGS_DIR = BASE_DIR.joinpath('tags')
 EXAMPLES_DIR = BASE_DIR.joinpath('tags_examples')
 
 FILENAME_LIST = 'interactiveTagSelector.txt'
+
+os.makedirs(TEMP_DIR, exist_ok=True)
 
 def examples():
     return EXAMPLES_DIR.rglob("*.yml")
