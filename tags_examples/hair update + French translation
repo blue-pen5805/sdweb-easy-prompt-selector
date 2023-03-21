@@ -1,0 +1,89 @@
+couleur cheveux:
+  single color:
+    cheveux noir: black hair
+    cheveux blonde: blonde hair
+    cheveux chatin: brown hair
+    cheveux marron clair: light brown hair
+    cheveux rouge: red hair
+    cheveux rose: pink hair
+    cheveux bleus foncés: dark blue hair
+    cheveux bleu: blue hair
+    cheveux blue claire: light blue hair
+    aqua hair: aqua hair
+    cheveux verts clairs: light green hair
+    cheveux vert: green hair
+    cheveux verts foncés: dark green hair
+    cheveux violet: purple hair
+    cheveux violet clair: light purple hair
+    cheveux orange: orange hair
+    cheveux argent: silver hair
+    cheveux gris: gray hair
+    cheveux blanc: white hair
+  multicolore:
+    cheveux multicolores: multicolored hair
+    Cheveux striés: streaked hair
+    Cheveux dégradés: gradient hair
+    Cheveux colorés à l'intérieur: colored inner hair
+    Cheveux divisés: split-color hair
+    cheveux arc-en-ciel: rainbow hair
+    cheveux bicolores: two-tone hair
+    pointes colorées: colored tips
+hairstyle:
+  longueur:
+    Cheveux très courts: very short hair
+    Cheveux courts: short hair
+    Cheveux moyens: medium hair
+    Cheveux longs: long hair
+    Cheveux très longs: very long hair
+    Cheveux très trés longs: absurdly long hair
+  types:
+    Cheveux en désordre: messy hair
+    Cheveux raides: straight hair
+    Cheveux ondulés: wavy hair
+    cheveux en bataille: flipped hair
+    cheveux asymétriques: asymmetrical hair
+  queue de cheval:
+    Queue de cheval: ponytail
+    Queue de cheval haute: high ponytail
+    Queue de cheval basse: low ponytail
+    Queue de cheval avant: front ponytail
+    Queue de cheval latérale: side ponytail
+    Queue de cheval fendue: split ponytail
+    Queue de cheval pliée: folded ponytail
+    Queue de cheval courte: short ponytail
+  queues de jumeaux:
+    queues de jumeaux: twintails
+    Queues de cheval basses: low twintails
+    Queue de pie courte: short twintails
+    Triple queue: tri tails
+    Quadruple queue: quad tails
+  Tresse: braid
+  Demi-coiffure: half updo
+  Un côté vers le haut: one side up
+  Deux côtés: two side up
+  Cheveux multi-attaches: multi-tied hair
+  Topknot: topknot
+  Cheveux bouclés: curly hair
+  Rouleau vertical: drill hair
+  Double rouleau vertical : twin drills
+  Anneaux: ringlets
+  Cheveux en forme de noeud: bow-shaped hair
+  Chignon: hair bun
+  Anneaux de cheveux: hair rings
+  Dreadlocks: dreadlocks
+
+frange:
+  Frange émoussée: blunt bangs
+  Frange asymétrique: asymmetrical bangs
+  cheveux sur les yeux:  hair over eyes
+  cheveux au-dessus d'un œil: hair over one eye
+  Frange séparée: parted bangs
+  Frange dégagée: swept bangs
+  Cheveux entre les yeux: hair between eyes
+  vent cheveux: hair intakes
+  boucles latérales: sidelocks
+
+IL:
+  Pattes d'oie: hair flaps
+  méche rebelle: ahoge
+  méche antenne: antenna hair
