@@ -45,13 +45,19 @@ def find_tag(tags, location):
     return value
 
 def replace_template(tags, prompt):
-    for match in re.finditer(r'(@([^>]+?)@)', prompt):
-        template = match.group(0)
-        try:
-            value = find_tag(tags, template[1:-1].split(':'))
-            prompt = prompt.replace(template, value, 1)
-        except:
-            print('error!')
+    count = 0
+    while count < 100:
+        if not '@' in prompt:
+            break
+
+        for match in re.finditer(r'(@([^>]+?)@)', prompt):
+            template = match.group(0)
+            try:
+                value = find_tag(tags, template[1:-1].split(':'))
+                prompt = prompt.replace(template, value, 1)
+            except:
+                print('error!')
+        count += 1
 
     return prompt
 
