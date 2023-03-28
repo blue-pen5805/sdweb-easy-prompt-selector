@@ -76,10 +76,10 @@ class Script(Script):
             return
 
         # Replace template tags
-        p.prompt = replace_template(self.tags, p.prompt)
         for i in range(len(p.all_prompts)):
-            p.all_prompts[i] = p.prompt
+            prompt = "".join(replace_template(self.tags, p.all_prompts[i]))
+            p.all_prompts[i] = prompt
 
-        p.negative_prompt = replace_template(self.tags, p.negative_prompt)
         for i in range(len(p.all_negative_prompts)):
-            p.all_negative_prompts[i] = p.negative_prompt
+            negative_prompt = "".join(replace_template(self.tags, p.all_negative_prompts[i]))
+            p.all_negative_prompts[i] = negative_prompt
