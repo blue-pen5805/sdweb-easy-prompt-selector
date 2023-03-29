@@ -268,8 +268,13 @@ class InteractiveTagSelector {
     const id = this.toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
-    if (textarea.value.trim() !== '' && textarea.value.trim().slice(-1) !== ',') { textarea.value += ', ' }
-    textarea.value += tag
+    if (textarea.value.trim() === '') {
+      textarea.value = tag
+    } else if (textarea.value.trim().endsWith(',')) {
+      textarea.value += ' ' + tag
+    } else {
+      textarea.value += ', ' + tag
+    }
 
     updateInput(textarea)
   }
