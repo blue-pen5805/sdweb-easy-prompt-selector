@@ -120,10 +120,10 @@ class Script(Script):
             return
 
         if is_negative == False:
-            prompt = p.prompt
+            prompt = p.prompt.replace('\n', ' ')
             param_name = "Input Prompt"
         else:
-            prompt = p.negative_prompt
+            prompt = p.negative_prompt.replace('\n', ' ')
             param_name = "Input NegativePrompt"
 
         p.extra_generation_params.update({param_name: prompt})
