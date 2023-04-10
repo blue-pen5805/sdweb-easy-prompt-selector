@@ -253,8 +253,16 @@ class InteractiveTagSelector {
   renderTagButton(title, value, color = 'primary') {
     return ITSElementBuilder.tagButton({
       title,
-      onClick: () => { this.addTag(value) },
-      onRightClick: (e) => { e.preventDefault(); this.removeTag(value) },
+      onClick: (e) => {
+        e.preventDefault();
+
+        this.addTag(value, this.toNegative || e.metaKey || e.ctrlKey)
+      },
+      onRightClick: (e) => {
+        e.preventDefault();
+
+        this.removeTag(value, this.toNegative || e.metaKey || e.ctrlKey)
+      },
       color
     })
   }
@@ -264,8 +272,8 @@ class InteractiveTagSelector {
     node.style.display = visible ? 'flex' : 'none'
   }
 
-  addTag(tag) {
-    const id = this.toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
+  addTag(tag, toNegative = false) {
+    const id = toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
     if (textarea.value.trim() === '') {
@@ -279,8 +287,8 @@ class InteractiveTagSelector {
     updateInput(textarea)
   }
 
-  removeTag(tag) {
-    const id = this.toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
+  removeTag(tag, toNegative = false) {
+    const id = toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
     if (textarea.value.trimStart().startsWith(tag)) {
