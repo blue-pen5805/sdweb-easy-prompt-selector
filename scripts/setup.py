@@ -30,7 +30,7 @@ def write_filename_list():
     filepaths = map(lambda path: path.relative_to(FILE_DIR).as_posix(), list(tags()))
 
     with open(TEMP_DIR.joinpath(FILENAME_LIST), 'w', encoding="utf-8") as f:
-        f.write('\n'.join(filepaths))
+        f.write('\n'.join(sorted(filepaths)))
 
 if len(list(TAGS_DIR.rglob("*.yml"))) == 0:
     copy_examples()
