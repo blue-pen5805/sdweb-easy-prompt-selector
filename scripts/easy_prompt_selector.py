@@ -72,14 +72,14 @@ def replace_template(tags, prompt):
 class Script(Script):
     tags = {}
 
-    def __init__(self) -> None:
+    def __init__(self):
         super().__init__()
         self.tags = load_tags()
 
-    def title(self) -> str:
+    def title(self):
         return "EasyPromptSelector"
 
-    def show(self, is_img2img)-> bool|object:
+    def show(self, is_img2img):
         return AlwaysVisible
 
     def ui(self, is_img2img):
