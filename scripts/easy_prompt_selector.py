@@ -3,7 +3,8 @@ import random
 import re
 import yaml
 
-from modules.scripts import Script, AlwaysVisible, basedir, shared
+import modules.scripts as scripts
+from modules.scripts import AlwaysVisible, basedir, shared
 
 FILE_DIR = Path().absolute()
 BASE_DIR = Path(basedir())
@@ -69,7 +70,7 @@ def replace_template(tags, prompt):
 
     return prompt
 
-class Script(Script):
+class Script(scripts.Script):
     tags = {}
 
     def __init__(self):
