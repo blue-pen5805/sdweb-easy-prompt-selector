@@ -36,7 +36,7 @@ def find_tag(tags, location):
         key = random.choice(list(value.keys()))
         tag = value[key]
         if type(tag) == dict:
-            value = find_tag(tag, random.choice(list(tag.keys())))
+            value = find_tag(tag, [random.choice(list(tag.keys()))])
         else:
             value = find_tag(value, key)
 
