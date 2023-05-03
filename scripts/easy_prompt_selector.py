@@ -163,5 +163,5 @@ class Script(scripts.Script):
 
         p.extra_generation_params.update({param_name: prompt})
 
-    def process(self, p):
+    def process(self, p, *args):
         self.replace_template_tags(p)
