@@ -43,6 +43,15 @@ class ITSElementBuilder {
     return button
   }
 
+  static reloadButton({ onClick }) {
+    const button = document.createElement('button')
+    button.id = 'interactiveTagSelector-reload-button'
+    button.style = 'display:none'
+    button.addEventListener('click', onClick)
+
+    return button
+  }
+
   static areaContainer(id = undefined) {
     const container = gradioApp().getElementById('txt2img_results').cloneNode()
     container.id = id
@@ -128,6 +137,17 @@ class InteractiveTagSelector {
 
   async init() {
     this.tags = await this.parseFiles()
+
+    const tagArea = gradioApp().querySelector(`#${this.AREA_ID}`)
+    if (tagArea != null) {
+      this.visible = false
+      this.changeVisibility(tagArea, this.visible)
+      tagArea.remove()
+    }
+
+    gradioApp()
+      .getElementById('txt2img_toprow')
+      .after(this.render())
   }
 
   async readFile(filepath) {
@@ -305,7 +325,6 @@ class InteractiveTagSelector {
 onUiLoaded(async () => {
   yaml = window.jsyaml
   const interactiveTagSelector = new InteractiveTagSelector(yaml, gradioApp())
-  await interactiveTagSelector.init()
 
   const button = ITSElementBuilder.openButton({
     onClick: () => {
@@ -314,10 +333,16 @@ onUiLoaded(async () => {
     }
   })
 
+  const reloadButton = ITSElementBuilder.reloadButton({
+    onClick: async () => {
+      // reload
+      await interactiveTagSelector.init()
+    }
+  })
+
   const txt2imgActionColumn = gradioApp().getElementById('txt2img_actions_column')
   txt2imgActionColumn.appendChild(button)
+  txt2imgActionColumn.appendChild(reloadButton)
 
-  gradioApp()
-    .getElementById('txt2img_toprow')
-    .after(interactiveTagSelector.render())
+  await interactiveTagSelector.init()
 })
