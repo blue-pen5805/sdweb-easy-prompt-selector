@@ -2,32 +2,18 @@ from pathlib import Path
 import random
 import re
 import yaml
-import os
 import gradio as gr
-import time
 
 import modules.scripts as scripts
 from modules.scripts import AlwaysVisible, basedir, shared
+from setup import write_filename_list
 
 FILE_DIR = Path().absolute()
 BASE_DIR = Path(basedir())
-TEMP_DIR = FILE_DIR.joinpath('tmp')
 TAGS_DIR = BASE_DIR.joinpath('tags')
-
-FILENAME_LIST = 'interactiveTagSelector.txt'
-
-os.makedirs(TEMP_DIR, exist_ok=True)
 
 def tag_files():
     return TAGS_DIR.rglob("*.yml")
-
-def write_filename_list():
-    filepaths = map(lambda path: path.relative_to(FILE_DIR).as_posix(), list(tag_files()))
-
-    with open(TEMP_DIR.joinpath(FILENAME_LIST), 'w', encoding="utf-8") as f:
-        f.write('\n'.join(sorted(filepaths)))
-
-write_filename_list()
 
 def load_tags():
     tags = {}
@@ -103,20 +89,12 @@ class Script(scripts.Script):
         with gr.Accordion('EasyPromptSelector', open=False):
             with gr.Row():
                 reload_button = gr.Button('🔄', variant='secondary')
-                dummy_text = gr.Textbox(interactive=False, visible=False)
 
         def reload():
             self.tags = load_tags()
             write_filename_list()
 
-            # returns dummy value to invoke javascript
-            return time.time()
-
-        reload_button.click(fn=reload, outputs=dummy_text)
-        dummy_text.change(
-            fn=None,
-            _js="() => { document.getElementById('interactiveTagSelector-reload-button').dispatchEvent(new Event('click')); return []; }"
-        )
+        reload_button.click(fn=reload)
 
         return [reload_button]
 

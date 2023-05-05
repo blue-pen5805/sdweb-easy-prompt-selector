@@ -43,15 +43,6 @@ class ITSElementBuilder {
     return button
   }
 
-  static reloadButton({ onClick }) {
-    const button = document.createElement('button')
-    button.id = 'interactiveTagSelector-reload-button'
-    button.style = 'display:none'
-    button.addEventListener('click', onClick)
-
-    return button
-  }
-
   static areaContainer(id = undefined) {
     const container = gradioApp().getElementById('txt2img_results').cloneNode()
     container.id = id
@@ -333,16 +324,8 @@ onUiLoaded(async () => {
     }
   })
 
-  const reloadButton = ITSElementBuilder.reloadButton({
-    onClick: async () => {
-      // reload
-      await interactiveTagSelector.init()
-    }
-  })
-
   const txt2imgActionColumn = gradioApp().getElementById('txt2img_actions_column')
   txt2imgActionColumn.appendChild(button)
-  txt2imgActionColumn.appendChild(reloadButton)
 
   await interactiveTagSelector.init()
 })
