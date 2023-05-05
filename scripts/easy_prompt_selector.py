@@ -2,9 +2,11 @@ from pathlib import Path
 import random
 import re
 import yaml
+import gradio as gr
 
 import modules.scripts as scripts
 from modules.scripts import AlwaysVisible, basedir, shared
+from scripts.setup import write_filename_list
 
 FILE_DIR = Path().absolute()
 BASE_DIR = Path(basedir())
@@ -81,10 +83,22 @@ class Script(scripts.Script):
         return "EasyPromptSelector"
 
     def show(self, is_img2img):
+        if (is_img2img):
+            return None
+
         return AlwaysVisible
 
     def ui(self, is_img2img):
-        return None
+        reload_button = gr.Button('🔄', variant='secondary', elem_id='interactiveTagSelector-reload-button')
+        reload_button.style(size='sm')
+
+        def reload():
+            self.tags = load_tags()
+            write_filename_list()
+
+        reload_button.click(fn=reload)
+
+        return [reload_button]
 
     def replace_template_tags(self, p):
         if shared.opts.eps_use_old_template_feature == False:
@@ -129,5 +143,5 @@ class Script(scripts.Script):
 
         p.extra_generation_params.update({param_name: prompt})
 
-    def process(self, p):
+    def process(self, p, *args):
         self.replace_template_tags(p)
