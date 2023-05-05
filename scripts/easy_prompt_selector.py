@@ -6,7 +6,7 @@ import gradio as gr
 
 import modules.scripts as scripts
 from modules.scripts import AlwaysVisible, basedir, shared
-from setup import write_filename_list
+from scripts.setup import write_filename_list
 
 FILE_DIR = Path().absolute()
 BASE_DIR = Path(basedir())
@@ -83,12 +83,14 @@ class Script(scripts.Script):
         return "EasyPromptSelector"
 
     def show(self, is_img2img):
+        if (is_img2img):
+            return None
+
         return AlwaysVisible
 
     def ui(self, is_img2img):
-        with gr.Accordion('EasyPromptSelector', open=False):
-            with gr.Row():
-                reload_button = gr.Button('🔄', variant='secondary')
+        reload_button = gr.Button('🔄', variant='secondary', elem_id='interactiveTagSelector-reload-button')
+        reload_button.style(size='sm')
 
         def reload():
             self.tags = load_tags()

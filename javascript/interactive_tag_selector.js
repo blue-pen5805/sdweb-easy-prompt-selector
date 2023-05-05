@@ -37,7 +37,7 @@ class ITSElementBuilder {
   // Elements
   static openButton({ onClick }) {
     const button = ITSElementBuilder.baseButton('🔯タグを選択', { size: 'sm', color: 'secondary' })
-    button.style = 'margin-top: 0.5rem;'
+    button.classList.add('easy_prompt_selector_button')
     button.addEventListener('click', onClick)
 
     return button
@@ -324,8 +324,18 @@ onUiLoaded(async () => {
     }
   })
 
+  const reloadButton = gradioApp().getElementById('interactiveTagSelector-reload-button')
+  reloadButton.addEventListener('click', async () => {
+    await interactiveTagSelector.init()
+  })
+
   const txt2imgActionColumn = gradioApp().getElementById('txt2img_actions_column')
-  txt2imgActionColumn.appendChild(button)
+  const container = document.createElement('div')
+  container.classList.add('easy_prompt_selector_container')
+  container.appendChild(button)
+  container.appendChild(reloadButton)
+
+  txt2imgActionColumn.appendChild(container)
 
   await interactiveTagSelector.init()
 })
