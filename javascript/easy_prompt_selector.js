@@ -1,4 +1,4 @@
-class ITSElementBuilder {
+class EPSElementBuilder {
   // Templates
   static baseButton(text, { size = 'sm', color = 'primary' }) {
     const button = gradioApp().getElementById('txt2img_generate').cloneNode()
@@ -36,7 +36,7 @@ class ITSElementBuilder {
 
   // Elements
   static openButton({ onClick }) {
-    const button = ITSElementBuilder.baseButton('🔯タグを選択', { size: 'sm', color: 'secondary' })
+    const button = EPSElementBuilder.baseButton('🔯タグを選択', { size: 'sm', color: 'secondary' })
     button.classList.add('easy_prompt_selector_button')
     button.addEventListener('click', onClick)
 
@@ -53,7 +53,7 @@ class ITSElementBuilder {
   }
 
   static tagButton({ title, onClick, onRightClick, color = 'primary' }) {
-    const button = ITSElementBuilder.baseButton(title, { color })
+    const button = EPSElementBuilder.baseButton(title, { color })
     button.style.height = '2rem'
     button.style.flexGrow = '0'
     button.style.margin = '2px'
@@ -111,12 +111,12 @@ class ITSElementBuilder {
   }
 }
 
-class InteractiveTagSelector {
-  PATH_FILE = 'tmp/interactiveTagSelector.txt'
-  AREA_ID = 'interactive-tag-selector'
-  SELECT_ID = 'interactive-tag-selector-select'
-  CONTENT_ID = 'interactive-tag-selector-content'
-  TO_NEGATIVE_PROMPT_ID = 'interactive-tag-selector-to-negative-prompt'
+class EasyPromptSelector {
+  PATH_FILE = 'tmp/easyPromptSelector.txt'
+  AREA_ID = 'easy-prompt-selector'
+  SELECT_ID = 'easy-prompt-selector-select'
+  CONTENT_ID = 'easy-prompt-selector-content'
+  TO_NEGATIVE_PROMPT_ID = 'easy-prompt-selector-to-negative-prompt'
 
   constructor(yaml, gradioApp) {
     this.yaml = yaml
@@ -178,7 +178,7 @@ class InteractiveTagSelector {
     row.appendChild(dropDown)
 
     const settings = document.createElement('div')
-    const checkbox = ITSElementBuilder.checkbox('ネガティブプロンプトに入力', {
+    const checkbox = EPSElementBuilder.checkbox('ネガティブプロンプトに入力', {
       onChange: (checked) => { this.toNegative = checked }
     })
     settings.style.flex = '1'
@@ -186,7 +186,7 @@ class InteractiveTagSelector {
 
     row.appendChild(settings)
 
-    const container = ITSElementBuilder.areaContainer(this.AREA_ID)
+    const container = EPSElementBuilder.areaContainer(this.AREA_ID)
 
     container.appendChild(row)
     container.appendChild(this.renderContent())
@@ -195,13 +195,13 @@ class InteractiveTagSelector {
   }
 
   renderDropdown() {
-    const dropDown = ITSElementBuilder.dropDown(
+    const dropDown = EPSElementBuilder.dropDown(
       this.SELECT_ID,
       Object.keys(this.tags), {
         onChange: (selected) => {
           const content = gradioApp().getElementById(this.CONTENT_ID)
           Array.from(content.childNodes).forEach((node) => {
-            const visible = node.id === `interactive-tag-selector-container-${selected}`
+            const visible = node.id === `easy-prompt-selector-container-${selected}`
             this.changeVisibility(node, visible)
           })
         }
@@ -218,8 +218,8 @@ class InteractiveTagSelector {
     Object.keys(this.tags).forEach((key) => {
       const values = this.tags[key]
 
-      const fields = ITSElementBuilder.tagFields()
-      fields.id = `interactive-tag-selector-container-${key}`
+      const fields = EPSElementBuilder.tagFields()
+      fields.id = `easy-prompt-selector-container-${key}`
       fields.style.display = 'none'
       fields.style.flexDirection = 'row'
       fields.style.marginTop = '10px'
@@ -244,12 +244,12 @@ class InteractiveTagSelector {
 
         if (typeof values === 'string') { return this.renderTagButton(key, values, 'secondary') }
 
-        const fields = ITSElementBuilder.tagFields()
+        const fields = EPSElementBuilder.tagFields()
         fields.style.flexDirection = 'column'
 
         fields.append(this.renderTagButton(key, `@${randomKey}@`))
 
-        const buttons = ITSElementBuilder.tagFields()
+        const buttons = EPSElementBuilder.tagFields()
         buttons.id = 'buttons'
         fields.append(buttons)
         this.renderTagButtons(values, randomKey).forEach((button) => {
@@ -262,7 +262,7 @@ class InteractiveTagSelector {
   }
 
   renderTagButton(title, value, color = 'primary') {
-    return ITSElementBuilder.tagButton({
+    return EPSElementBuilder.tagButton({
       title,
       onClick: (e) => {
         e.preventDefault();
@@ -315,18 +315,18 @@ class InteractiveTagSelector {
 
 onUiLoaded(async () => {
   yaml = window.jsyaml
-  const interactiveTagSelector = new InteractiveTagSelector(yaml, gradioApp())
+  const easyPromptSelector = new EasyPromptSelector(yaml, gradioApp())
 
-  const button = ITSElementBuilder.openButton({
+  const button = EPSElementBuilder.openButton({
     onClick: () => {
-      const tagArea = gradioApp().querySelector(`#${interactiveTagSelector.AREA_ID}`)
-      interactiveTagSelector.changeVisibility(tagArea, interactiveTagSelector.visible = !interactiveTagSelector.visible)
+      const tagArea = gradioApp().querySelector(`#${easyPromptSelector.AREA_ID}`)
+      easyPromptSelector.changeVisibility(tagArea, easyPromptSelector.visible = !easyPromptSelector.visible)
     }
   })
 
-  const reloadButton = gradioApp().getElementById('interactiveTagSelector-reload-button')
+  const reloadButton = gradioApp().getElementById('easy_prompt_selector_reload_button')
   reloadButton.addEventListener('click', async () => {
-    await interactiveTagSelector.init()
+    await easyPromptSelector.init()
   })
 
   const txt2imgActionColumn = gradioApp().getElementById('txt2img_actions_column')
@@ -337,5 +337,5 @@ onUiLoaded(async () => {
 
   txt2imgActionColumn.appendChild(container)
 
-  await interactiveTagSelector.init()
+  await easyPromptSelector.init()
 })

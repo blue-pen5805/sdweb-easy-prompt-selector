@@ -11,7 +11,7 @@ TEMP_DIR = FILE_DIR.joinpath('tmp')
 TAGS_DIR = BASE_DIR.joinpath('tags')
 EXAMPLES_DIR = BASE_DIR.joinpath('tags_examples')
 
-FILENAME_LIST = 'interactiveTagSelector.txt'
+FILENAME_LIST = 'easyPromptSelector.txt'
 
 os.makedirs(TEMP_DIR, exist_ok=True)
 
