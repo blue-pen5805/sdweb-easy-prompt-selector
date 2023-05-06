@@ -96,6 +96,7 @@ class EPSElementBuilder {
     label.style.alignItems = 'center'
 
     const checkbox = gradioApp().querySelector('input[type=checkbox]').cloneNode()
+    checkbox.checked = false
     checkbox.addEventListener('change', (event) => {
        onChange(event.target.checked)
     })
