@@ -5,7 +5,8 @@ import yaml
 import gradio as gr
 
 import modules.scripts as scripts
-from modules.scripts import AlwaysVisible, basedir, shared
+from modules.scripts import AlwaysVisible, basedir
+from modules import shared
 from scripts.setup import write_filename_list
 
 FILE_DIR = Path().absolute()
