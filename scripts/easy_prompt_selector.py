@@ -84,12 +84,12 @@ class Script(scripts.Script):
         return "EasyPromptSelector"
 
     def show(self, is_img2img):
-        if (is_img2img):
-            return None
-
         return AlwaysVisible
 
     def ui(self, is_img2img):
+        if (is_img2img):
+            return None
+
         reload_button = gr.Button('🔄', variant='secondary', elem_id='easy_prompt_selector_reload_button')
         reload_button.style(size='sm')
 
