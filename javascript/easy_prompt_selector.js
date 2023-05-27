@@ -156,7 +156,7 @@ class EasyPromptSelector {
 
     const tags = {}
     for (const path of paths) {
-      const filename = path.split('/').pop().split('.').shift()
+      const filename = path.split('/').pop().split('.').slice(0, -1).join('.')
       const data = await this.readFile(path)
       yaml.loadAll(data, function (doc) {
         tags[filename] = doc
