@@ -8,3 +8,15 @@
 .easy_prompt_selector_button {
   flex: 1;
 }
+
+span.easy_prompt_selector_tag img {
+    display: none;
+}
+
+span.easy_prompt_selector_tag:hover img {
+    display: inline-block;
+    position: absolute;
+    margin-left: 1rem;
+    max-width: 480px;
+    z-index: 100;
+}

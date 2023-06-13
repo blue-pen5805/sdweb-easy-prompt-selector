@@ -1,6 +1,6 @@
 class EPSElementBuilder {
   // Templates
-  static baseButton(text, { size = 'sm', color = 'primary' }) {
+  static baseButton(text, { size = 'sm', color = 'primary', image = null }) {
     const button = gradioApp().getElementById('txt2img_generate').cloneNode()
     button.id = ''
     button.classList.remove('gr-button-lg', 'gr-button-primary', 'lg', 'primary')
@@ -12,7 +12,21 @@ class EPSElementBuilder {
       size,
       color
     )
-    button.textContent = text
+    if (image) {
+        const span = document.createElement('span')
+        span.classList.add('easy_prompt_selector_tag')
+        button.appendChild(span)
+        const img = document.createElement('img')
+        const timestamp = new Date().getTime()
+        img.src = "/file/extensions/sdweb-easy-prompt-selector/tags/" + image + '?' + timestamp
+        img.alt = ''
+        img.onerror = function () { this.onerror = null; this.src=''; }
+        span.appendChild(document.createTextNode(text))
+        span.appendChild(img)
+        button.appendChild(span)
+    } else {
+        button.textContent = text
+    }
 
     return button
   }
@@ -52,8 +66,9 @@ class EPSElementBuilder {
     return container
   }
 
-  static tagButton({ title, onClick, onRightClick, color = 'primary' }) {
-    const button = EPSElementBuilder.baseButton(title, { color })
+  static tagButton({ imagePath, imageFormat, title, onClick, onRightClick, color = 'primary' }) {
+    const image = imagePath ? imagePath + '/' + title + '.' + imageFormat : null
+    const button = EPSElementBuilder.baseButton(title, { color, image })
     button.style.height = '2rem'
     button.style.flexGrow = '0'
     button.style.margin = '2px'
@@ -125,10 +140,11 @@ class EasyPromptSelector {
     this.visible = false
     this.toNegative = false
     this.tags = undefined
+    this.settings = undefined
   }
 
   async init() {
-    this.tags = await this.parseFiles()
+    [this.tags, this.settings] = await this.parseFiles()
 
     const tagArea = gradioApp().querySelector(`#${this.AREA_ID}`)
     if (tagArea != null) {
@@ -155,15 +171,18 @@ class EasyPromptSelector {
     const paths = text.split(/\r\n|\n/)
 
     const tags = {}
+    const settings = {}
     for (const path of paths) {
       const filename = path.split('/').pop().split('.').slice(0, -1).join('.')
       const data = await this.readFile(path)
       yaml.loadAll(data, function (doc) {
+        settings[filename] = doc['.settings']
+        delete doc['.settings']
         tags[filename] = doc
       })
     }
 
-    return tags
+    return [tags, settings]
   }
 
   // Render
@@ -225,7 +244,8 @@ class EasyPromptSelector {
       fields.style.flexDirection = 'row'
       fields.style.marginTop = '10px'
 
-      this.renderTagButtons(values, key).forEach((group) => {
+      const imageFormat = this.settings[key]?.fileFormatForImages || 'jpg'
+      this.renderTagButtons(key, imageFormat, values, key).forEach((group) => {
         fields.appendChild(group)
       })
 
@@ -235,25 +255,25 @@ class EasyPromptSelector {
     return content
   }
 
-  renderTagButtons(tags, prefix = '') {
+  renderTagButtons(imagePath, imageFormat, tags, prefix = '') {
     if (Array.isArray(tags)) {
-      return tags.map((tag) => this.renderTagButton(tag, tag, 'secondary'))
+      return tags.map((tag) => this.renderTagButton(imagePath, imageFormat, tag, tag, 'secondary'))
     } else {
       return Object.keys(tags).map((key) => {
         const values = tags[key]
         const randomKey = `${prefix}:${key}`
 
-        if (typeof values === 'string') { return this.renderTagButton(key, values, 'secondary') }
+        if (typeof values === 'string') { return this.renderTagButton(imagePath, imageFormat, key, values, 'secondary') }
 
         const fields = EPSElementBuilder.tagFields()
         fields.style.flexDirection = 'column'
 
-        fields.append(this.renderTagButton(key, `@${randomKey}@`))
+        fields.append(this.renderTagButton(null, imageFormat, key, `@${randomKey}@`))
 
         const buttons = EPSElementBuilder.tagFields()
         buttons.id = 'buttons'
         fields.append(buttons)
-        this.renderTagButtons(values, randomKey).forEach((button) => {
+        this.renderTagButtons(imagePath + '/' + key, imageFormat, values, randomKey).forEach((button) => {
           buttons.appendChild(button)
         })
 
@@ -262,9 +282,9 @@ class EasyPromptSelector {
     }
   }
 
-  renderTagButton(title, value, color = 'primary') {
+  renderTagButton(imagePath, imageFormat, title, value, color = 'primary') {
     return EPSElementBuilder.tagButton({
-      title,
+      imagePath, imageFormat, title,
       onClick: (e) => {
         e.preventDefault();
 
