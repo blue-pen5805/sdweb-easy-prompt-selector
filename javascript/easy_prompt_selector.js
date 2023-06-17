@@ -13,19 +13,26 @@ class EPSElementBuilder {
       color
     )
     if (image) {
-        const span = document.createElement('span')
-        span.classList.add('easy_prompt_selector_tag')
-        button.appendChild(span)
-        const img = document.createElement('img')
-        const timestamp = new Date().getTime()
-        img.src = "/file/extensions/sdweb-easy-prompt-selector/tags/" + image + '?' + timestamp
-        img.alt = ''
-        img.onerror = function () { this.onerror = null; this.src=''; }
-        span.appendChild(document.createTextNode(text))
-        span.appendChild(img)
-        button.appendChild(span)
+      const div = document.createElement('div')
+      div.classList.add('easy_prompt_selector_tag')
+      const img = document.createElement('img')
+      img.src = "/file/extensions/sdweb-easy-prompt-selector/tags/" + image
+      img.alt = ''
+      img.onerror = function () { this.onerror = null; this.src=''; }
+      button.addEventListener('mouseover', function (e) {
+        if (e.clientX / window.innerWidth <= 0.5) {
+            img.classList.remove('right')
+            img.classList.add('left')
+        } else {
+            img.classList.remove('left')
+            img.classList.add('right')
+        }
+      });
+      div.appendChild(document.createTextNode(text))
+      div.appendChild(img)
+      button.appendChild(div)
     } else {
-        button.textContent = text
+      button.textContent = text
     }
 
     return button

@@ -9,14 +9,22 @@
   flex: 1;
 }
 
-span.easy_prompt_selector_tag img {
+div.easy_prompt_selector_tag img {
     display: none;
 }
 
-span.easy_prompt_selector_tag:hover img {
-    display: inline-block;
+div.easy_prompt_selector_tag:hover img {
+    display: block;
     position: absolute;
-    margin-left: 1rem;
-    max-width: 480px;
+    margin-top: 1rem;
     z-index: 100;
+    max-width: 480px;
+}
+
+div.easy_prompt_selector_tag:hover img.left {
+    left: 0;
+}
+
+div.easy_prompt_selector_tag:hover img.right {
+    right: 0;
 }
