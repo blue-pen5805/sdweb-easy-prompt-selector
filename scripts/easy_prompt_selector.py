@@ -25,7 +25,7 @@ def load_tags():
 
     return tags
 
-def find_tag(tags, location):
+def find_tag(tags, location, entity = ''):
     if type(location) == str:
         return tags[location]
 
@@ -46,6 +46,9 @@ def find_tag(tags, location):
     if (type(value) == list):
         value = random.choice(value)
 
+    if value.strip().endswith('*'):
+        value = value.strip(' *') + (' ' + entity) if entity else ''
+
     return value
 
 def replace_template(tags, prompt, seed = None):
@@ -56,7 +59,10 @@ def replace_template(tags, prompt, seed = None):
         if not '@' in prompt:
             break
 
-        for match in re.finditer(r'(@((?P<num>\d+(-\d+)?)\$\$)?(?P<ref>[^>]+?)@)', prompt):
+        for match in re.finditer(
+                r'(@((?P<num>\d+(-\d+)?)\$\$)?(?P<ref>[^>]+?)@)\s*(?P<entity>[^\,]*)(?P<comma>\,{0,1}?)',
+                prompt
+        ):
             template = match.group()
             try:
                 try:
@@ -67,10 +73,15 @@ def replace_template(tags, prompt, seed = None):
                     min_count, max_count = 1, 1
                 count = random.randint(min_count, max_count)
 
-                values = list(map(lambda x: find_tag(tags, match.group('ref').split(':')), list(range(count))))
+                values = list(
+                        map(
+                            lambda _: find_tag(tags, match.group('ref').split(':'), match.group('entity').strip()),
+                            list(range(count))
+                        )
+                )
                 prompt = prompt.replace(template, ', '.join(values), 1)
             except Exception as e:
-                prompt = prompt.replace(template, '', 1)
+                prompt = prompt.replace(template, '' if not match.group('comma') else ',', 1)
         count += 1
 
     random.seed()
