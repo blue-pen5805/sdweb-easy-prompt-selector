@@ -246,8 +246,8 @@ class EasyPromptSelector {
 
         if (typeof values === 'string') { 
           return this.renderTagButton(
-            key, 
             values.trim().endsWith('*') ? key + ':' : key, 
+            values,
             'secondary'
           ) 
         }
