@@ -40,8 +40,6 @@ Click "🔯Select Tag" under the style, and the screen will look like this:
 
 ![Screenshot of easy prompt selector](media/01-02.jpeg)
 
-Feel free to click on the buttons to see what they do.
-
 ### Usage
 
 Clicking a button automatically adds the corresponding string to the prompt input field. It's quite straightforward, isn't it?
@@ -49,11 +47,12 @@ Clicking a button automatically adds the corresponding string to the prompt inpu
 As a bonus feature, if you press the orange button, one of the options in the category will be randomly selected at the time of generation.
 
 [![Random Generation](media/02-02.png)](media/%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E7%94%9F%E6%88%90.mp4)
-(Viewing this requires downloading the mp4 file due to GitHub limitations)
+
+(Viewing this video requires downloading the mp4 file due to GitHub limitations)
 
 ### Customization
 
-Add a *.yml file to stable-diffusion-webui\extensions\sdweb-easy-prompt-selector\tags, and you can add, change, and delete freely.
+Add a *.yml file to `stable-diffusion-webui\extensions\sdweb-easy-prompt-selector\tags`, and you can add, change, and delete freely.
 
 In general, it should be self-explanatory if you inspect the default file!
 
@@ -67,13 +66,12 @@ List your options starting with a "-".
 
 Example: tags/test.yml
 
-![just buttons](media/01-03.jpeg)
-
 ```yml
 - standing
 - sitting
 - squatting
 ```
+![just buttons](media/01-03.jpeg)
 
 #### For users who want to customize the button labels
 
@@ -132,7 +130,7 @@ Building:
 ### Cautions
 
 - This extension may behave unpredictably if you regularly use the "@" symbol in your prompts.
-- Folder division in /tags is not supported.
+- Folder division in `/tags` is not supported.
 - You may need to restart the webui when adding a yml file.
 - If you are using the random feature, it's safer to restart when making changes.
 - If the "Select Tag" button doesn't respond, there's likely an error in your yml file, or the syntax isn't supported.
@@ -142,11 +140,11 @@ Building:
 
 Currently, only three files are prepared for people, hair and faces, but more may be added in the future.
 
-These will appear in sdweb-easy-prompt-selector/tags_examples/, so feel free to copy from there as needed.
+These will appear in `sdweb-easy-prompt-selector/tags_examples/`, so feel free to copy from there as needed.
 
 ### If something is unclear
 
-If you have any problems, please feel free to post them in the "issues" section (although please note that I can't guarantee I'll be able to respond to all inquiries).
+If you have any problems, please feel free to post them in the "Issues" section (although please note that I can't guarantee I'll be able to respond to all inquiries).
 
 ## The Prompt Input Extension Has Been Updated
 
@@ -156,7 +154,7 @@ Check out these new features!
 
 - Tags can now be deleted by right-clicking on the buttons.
 - The random function can now be used with wildcards.
-- Original prompt input is recorded when using the random function.
+- Original prompt input is recorded in images as PNG Info when using the random function.
 - Support for infinite random loops has been added!
 - You can now specify the number of iterations in the random function (similar to Dynamic Prompts).
 
@@ -165,7 +163,8 @@ Check out these new features!
 Exactly as described. You can now delete a tag by clicking the button and then right-clicking on it.
 
 [![left-right click](media/02-03.png)](media/%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E5%8F%B3%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E3%81%97%E3%81%A6%E3%81%BE%E3%81%99%EF%BC%81.mp4)
-(Viewing this requires downloading the mp4 file due to GitHub limitations)
+
+(Viewing this video requires downloading the mp4 file due to GitHub limitations)
 
 Thank you, [MrKuenning](https://github.com/MrKuenning), for your request on GitHub!
 
@@ -207,7 +206,7 @@ Hair color:
   Random: '@hair:Color@ hair'
 ```
 
-You can now create random functions within other random functions!
+You can now create random functions within other random functions! If you write it this way, typing @hair:Hair color@ will give you black hair or white hair!
 
 Please note: Despite the term "infinite", there is actually a limit of 100 loops.
 
@@ -226,10 +225,11 @@ Cute:
 ```
 
 @3$$animal:Cute@ -> "panda, cat, dog"
+
 @0-2$$animal:Cute@ -> sometimes "cat", sometimes "dog, panda", or nothing
 
 Please be aware that this might result in duplicate tags, as it does not avoid duplications.
 
 ### In Closing
 
-I apologize for any bugs that may occur! I appreciate your understanding as I continue to improve this extension.
+I apologize for any bugs that may occur! I appreciate your understanding.
