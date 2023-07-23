@@ -4,23 +4,19 @@
 
 ## English Readme
 
-This is an extension designed to simplify the process of inputting prompts.
+This extension, designed to simplify the process of inputting prompts, is currently available exclusively in Japanese. An English version may be considered for future development.
 
-I developed this tool because I often forget and make mistakes with words, plus managing Dynamic Prompts is a tad too complex for my liking.
+I created this tool due to frequent errors and forgetfulness in word usage, and to manage Dynamic Prompts which I found to be overly complex.
 
-<https://github.com/blue-pen5805/sdweb-easy-prompt-selector>
+It's important to mention that the testing of this extension has been limited to local Windows environments. As such, its performance on platforms like colab remains uncertain.
 
-Please note that I have not yet tested this extension outside of local Windows, so its performance on platforms like colab is uncertain.
-
-If anyone has successfully operated it, I would appreciate your feedback.
-
-(Please also note that I'm not certain if I can troubleshoot if it doesn't work.)
+Feedback is highly appreciated from anyone who has successfully operated it. However, be aware that troubleshooting may not be possible if it doesn't function as intended.
 
 ### Features
 
 Please watch the video below for a quick overview.
 
-<video src="media/%E7%B0%A1%E5%8D%98%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9.mp4" controls title="How to Use"></video>
+[![How to Use](media/02-01.png)](media/%E7%B0%A1%E5%8D%98%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9.mp4)
 
 Due to recording limitations, the drop-down menu does not appear in the video.
 
@@ -52,7 +48,7 @@ Clicking a button automatically adds the corresponding string to the prompt inpu
 
 As a bonus feature, if you press the orange button, one of the options in the category will be randomly selected at the time of generation.
 
-<video src="media/%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E7%94%9F%E6%88%90.mp4" controls title="Random Generation"></video>
+[![Random Generation](media/02-02.png)](media/%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E7%94%9F%E6%88%90.mp4)
 
 ### Customization
 
@@ -167,7 +163,7 @@ Check out these new features!
 
 Exactly as described. You can now delete a tag by clicking the button and then right-clicking on it.
 
-<video src="media/%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E5%8F%B3%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E3%81%97%E3%81%A6%E3%81%BE%E3%81%99%EF%BC%81.mp4" controls title="left-right click"></video>
+[![left-right click](media/02-03.png)](media/%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E5%8F%B3%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E3%81%97%E3%81%A6%E3%81%BE%E3%81%99%EF%BC%81.mp4)
 
 Thank you, [MrKuenning](https://github.com/MrKuenning), for your request on GitHub!
 
