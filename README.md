@@ -14,7 +14,7 @@ Feedback is highly appreciated from anyone who has successfully operated it. How
 
 ### Features
 
-Please watch the video below for a quick overview.
+Please watch the video below for a quick overview (mp4 file download required due to GitHub limitations).
 
 [![How to Use](media/02-01.png)](media/%E7%B0%A1%E5%8D%98%E3%81%AA%E4%BD%BF%E3%81%84%E6%96%B9.mp4)
 
@@ -49,6 +49,7 @@ Clicking a button automatically adds the corresponding string to the prompt inpu
 As a bonus feature, if you press the orange button, one of the options in the category will be randomly selected at the time of generation.
 
 [![Random Generation](media/02-02.png)](media/%E3%83%A9%E3%83%B3%E3%83%80%E3%83%A0%E7%94%9F%E6%88%90.mp4)
+(Viewing this requires downloading the mp4 file due to GitHub limitations)
 
 ### Customization
 
@@ -164,6 +165,7 @@ Check out these new features!
 Exactly as described. You can now delete a tag by clicking the button and then right-clicking on it.
 
 [![left-right click](media/02-03.png)](media/%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E5%8F%B3%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AF%E3%81%97%E3%81%9F%E3%82%8A%E3%81%97%E3%81%A6%E3%81%BE%E3%81%99%EF%BC%81.mp4)
+(Viewing this requires downloading the mp4 file due to GitHub limitations)
 
 Thank you, [MrKuenning](https://github.com/MrKuenning), for your request on GitHub!
 
