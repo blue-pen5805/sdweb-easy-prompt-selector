@@ -8,3 +8,23 @@
 .easy_prompt_selector_button {
   flex: 1;
 }
+
+div.easy_prompt_selector_tag img {
+    display: none;
+}
+
+div.easy_prompt_selector_tag:hover img {
+    display: block;
+    position: absolute;
+    margin-top: 1rem;
+    z-index: 100;
+    max-width: 480px;
+}
+
+div.easy_prompt_selector_tag:hover img.left {
+    left: 0;
+}
+
+div.easy_prompt_selector_tag:hover img.right {
+    right: 0;
+}
