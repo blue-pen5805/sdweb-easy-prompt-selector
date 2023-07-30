@@ -1,0 +1,15 @@
+奇形:
+  全体:
+    - bad anatomy
+    - disfigured
+    - extra digits
+    - fewer digits
+  手:
+    - mutated hands
+    - mutated fingers
+    - bad hands
+    - bad fingers
+    - extra hands
+    - fewer hands
+    - extra fingers
+    - fewer fingers
