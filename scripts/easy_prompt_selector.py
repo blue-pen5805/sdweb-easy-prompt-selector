@@ -93,8 +93,7 @@ class Script(scripts.Script):
         if (is_img2img):
             return None
 
-        reload_button = gr.Button('🔄', variant='secondary', elem_id='easy_prompt_selector_reload_button')
-        reload_button.style(size='sm')
+        reload_button = gr.Button('🔄', variant='secondary', size="sm", elem_id='easy_prompt_selector_reload_button')
 
         def reload():
             self.tags = load_tags()
