@@ -236,7 +236,11 @@ class EasyPromptSelector {
       content.appendChild(fields)
     })
 
-    this.setupFloaters(content)
+    // 設定を確認し、有効な場合のみフローティング機能をセットアップします。
+    const settingCheckbox = gradioApp().querySelector('#setting_eps_enable_floating_prompts input[type=checkbox]')
+    if (settingCheckbox && settingCheckbox.checked) {
+      this.setupFloaters(content)
+    }
 
     return content
   }
