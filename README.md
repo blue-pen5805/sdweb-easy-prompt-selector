@@ -1,3 +1,10 @@
+次の機能を追加
+- タグボタンエリアにマウスがあるときプロンプト入力欄をフロート表示 \
+  ![Image](https://github.com/user-attachments/assets/c92163e4-87b2-4531-a406-6d1b53db5d46) \
+  （設定で切り替え可能　Settings > EasyPromptSelector > プロンプト入力欄のフローティングを有効にする）
+- ボタンマウスオーバーでタグをツールチップ表示 \
+  ![Image](https://github.com/user-attachments/assets/3bbe2900-3604-42ce-9f8d-98deb7a7cf45)
+
 # Easy Prompt Selector
 
 [使い方(暫定)](https://blue-pen5805.fanbox.cc/posts/5306601)
