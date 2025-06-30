@@ -52,8 +52,12 @@ class EPSElementBuilder {
     return container
   }
 
-  static tagButton({ title, onClick, onRightClick, color = 'primary' }) {
+  static tagButton({ title, value, onClick, onRightClick, color = 'primary' }) {
     const button = EPSElementBuilder.baseButton(title, { color })
+    // ★★★ 機能追加 ★★★
+    // ボタンのtitle属性に実際に入力されるプロンプトを設定する。
+    // これにより、マウスオーバーでツールチップが表示される。
+    button.title = value
     button.style.height = '2rem'
     button.style.flexGrow = '0'
     button.style.margin = '2px'
@@ -232,6 +236,8 @@ class EasyPromptSelector {
       content.appendChild(fields)
     })
 
+    this.setupFloaters(content)
+
     return content
   }
 
@@ -265,6 +271,7 @@ class EasyPromptSelector {
   renderTagButton(title, value, color = 'primary') {
     return EPSElementBuilder.tagButton({
       title,
+      value,
       onClick: (e) => {
         e.preventDefault();
 
@@ -297,6 +304,9 @@ class EasyPromptSelector {
     }
 
     updateInput(textarea)
+
+    // 追加したタグが見えるように、テキストエリアを一番下までスクロールします。
+    textarea.scrollTop = textarea.scrollHeight
   }
 
   removeTag(tag, toNegative = false) {
@@ -311,6 +321,119 @@ class EasyPromptSelector {
     }
 
     updateInput(textarea)
+  }
+
+  setupFloaters(triggerElement) {
+    let floater = null
+    let positivePromptPlaceholder = null
+    let negativePromptPlaceholder = null
+    let originalPositiveParent = null
+    let originalNegativeParent = null
+    let removeTimer = null
+
+    const startRemoveTimer = () => {
+      clearTimeout(removeTimer)
+      removeTimer = setTimeout(removeFloater, 200)
+    }
+
+    const cancelRemoveTimer = () => {
+      clearTimeout(removeTimer)
+    }
+
+    const createFloater = () => {
+      if (floater) return // すでにフローティング中なら何もしない
+
+      const positivePromptContainer = gradioApp().getElementById('txt2img_prompt')
+      const negativePromptContainer = gradioApp().getElementById('txt2img_neg_prompt')
+
+      if (!positivePromptContainer || !negativePromptContainer) return
+
+      originalPositiveParent = positivePromptContainer.parentNode
+      originalNegativeParent = negativePromptContainer.parentNode
+
+      positivePromptPlaceholder = document.createElement('div')
+      positivePromptPlaceholder.style.height = `${positivePromptContainer.offsetHeight}px`
+      negativePromptPlaceholder = document.createElement('div')
+      negativePromptPlaceholder.style.height = `${negativePromptContainer.offsetHeight}px`
+
+      originalPositiveParent.insertBefore(positivePromptPlaceholder, positivePromptContainer)
+      originalNegativeParent.insertBefore(negativePromptPlaceholder, negativePromptContainer)
+
+      floater = document.createElement('div')
+      floater.id = 'easy-prompt-selector-floater'
+      Object.assign(floater.style, {
+        position: 'fixed',
+        top: '10px',
+        left: '10px',
+        zIndex: '9999',
+        backgroundColor: 'var(--panel-background-fill, #202124)',
+        border: '1px solid var(--block-border-color, #374151)',
+        borderRadius: 'var(--block-radius, 8px)',
+        padding: '1rem',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+        minWidth: '400px',
+      })
+
+      floater.appendChild(positivePromptContainer)
+      floater.appendChild(negativePromptContainer)
+
+      // 入力欄の高さを固定し、個別にスクロールできるようにする
+      const textareas = floater.querySelectorAll('textarea')
+      textareas.forEach(textarea => {
+        // WebUIのスクリプトがstyle.heightを上書きするのに対抗するため、!importantを指定します。
+        // min-heightとmax-heightを同じ値に固定することで、WebUIによる高さの自動調整を完全に無効化します。
+        textarea.style.setProperty('min-height', '20vh', 'important');
+        textarea.style.setProperty('max-height', '20vh', 'important');
+        textarea.style.setProperty('overflow-y', 'auto', 'important')
+      })
+
+      document.body.appendChild(floater)
+      floater.addEventListener('mouseenter', cancelRemoveTimer)
+      floater.addEventListener('mouseleave', startRemoveTimer)
+    }
+
+    const removeFloater = () => {
+      if (!floater) return
+
+      // 追加したスタイルを削除し、元の自動で高さが変わる挙動に戻す
+      const textareas = floater.querySelectorAll('textarea')
+      textareas.forEach(textarea => {
+        textarea.style.removeProperty('min-height');
+        textarea.style.removeProperty('max-height');
+        textarea.style.removeProperty('overflow-y')
+        textarea.dispatchEvent(new Event('input')) // styleを削除した後、高さを再計算させる
+      })
+
+      const positivePromptContainer = floater.children[0]
+      const negativePromptContainer = floater.children[1]
+
+      if (positivePromptContainer && originalPositiveParent && positivePromptPlaceholder) {
+        originalPositiveParent.insertBefore(positivePromptContainer, positivePromptPlaceholder)
+      }
+      if (negativePromptContainer && originalNegativeParent && negativePromptPlaceholder) {
+        originalNegativeParent.insertBefore(negativePromptContainer, negativePromptPlaceholder)
+      }
+
+      positivePromptPlaceholder?.remove()
+      negativePromptPlaceholder?.remove()
+      floater.remove()
+
+      floater = null
+      positivePromptPlaceholder = null
+      negativePromptPlaceholder = null
+      originalPositiveParent = null
+      originalNegativeParent = null
+    }
+
+    triggerElement.addEventListener('mouseenter', () => {
+      cancelRemoveTimer()
+      if (!floater) {
+        createFloater()
+      }
+    })
+    triggerElement.addEventListener('mouseleave', startRemoveTimer)
   }
 }
 
