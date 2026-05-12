@@ -93,8 +93,8 @@ class Script(scripts.Script):
         if (is_img2img):
             return None
 
-        reload_button = gr.Button('🔄', variant='secondary', elem_id='easy_prompt_selector_reload_button')
-        reload_button.style(size='sm')
+        reload_button = gr.Button('🔄', variant='secondary', size="sm", elem_id='easy_prompt_selector_reload_button')
+        to_negative = gr.Checkbox(label="ネガティブプロンプトに入力", value=False, elem_id='eps_to_negative_checkbox')
 
         def reload():
             self.tags = load_tags()
@@ -102,7 +102,7 @@ class Script(scripts.Script):
 
         reload_button.click(fn=reload)
 
-        return [reload_button]
+        return [reload_button, to_negative]
 
     def replace_template_tags(self, p):
         prompts = [

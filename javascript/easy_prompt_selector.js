@@ -91,24 +91,14 @@ class EPSElementBuilder {
   }
 
   static checkbox(text, { onChange }) {
-    const label = document.createElement('label')
-    label.style.display = 'flex'
-    label.style.alignItems = 'center'
+    const wrapper = gradioApp().querySelector('#eps_to_negative_checkbox');
+    const checkbox = wrapper?.querySelector('input[type=checkbox]');
 
-    const checkbox = gradioApp().querySelector('input[type=checkbox]').cloneNode()
-    checkbox.checked = false
-    checkbox.addEventListener('change', (event) => {
-       onChange(event.target.checked)
-    })
+    checkbox?.addEventListener('change', (e) => {
+      onChange(e.target.checked);
+    });
 
-    const span = document.createElement('span')
-    span.style.marginLeft = 'var(--size-2, 8px)'
-    span.textContent = text
-
-    label.appendChild(checkbox)
-    label.appendChild(span)
-
-    return label
+    return wrapper;
   }
 }
 
