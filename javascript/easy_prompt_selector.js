@@ -286,14 +286,14 @@ class EasyPromptSelector {
 
   addTag(tag, toNegative = false) {
     const id = toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
-    const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
-    if (textarea.value.trim() === '') {
-      textarea.value = tag
-    } else if (textarea.value.trim().endsWith(',')) {
-      textarea.value += ' ' + tag
+    const textarea = gradioApp().getElementById(id).querySelector('textarea')
+    const val = textarea.value;
+
+    if (!/\S/.test(val)) {
+      textarea.value = tag;
     } else {
-      textarea.value += ', ' + tag
+      textarea.value = val.replace(/[\s,]*$/, '') + ', ' + tag;
     }
 
     updateInput(textarea)
@@ -303,12 +303,13 @@ class EasyPromptSelector {
     const id = toNegative ? 'txt2img_neg_prompt' : 'txt2img_prompt'
     const textarea = gradioApp().getElementById(id).querySelector('textarea')
 
-    if (textarea.value.trimStart().startsWith(tag)) {
-      const matched = textarea.value.match(new RegExp(`${tag.replace(/[-\/\\^$*+?.()|\[\]{}]/g, '\\$&') },*`))
-      textarea.value = textarea.value.replace(matched[0], '').trimStart()
-    } else {
-      textarea.value = textarea.value.replace(`, ${tag}`, '')
-    }
+    const cleanTag = tag.replace(/^[\s,]*/, '').replace(/[\s,]*$/, '');
+    let escapedTag = cleanTag.replace(/[-\/\\^$*+?.()|\[\]{}]/g, '\\$&');
+    escapedTag = escapedTag.replace(/\s*,\s*/g, '\\s*,\\s*');
+    const pattern = new RegExp(`(^\\s*|,\\s*)(${escapedTag})(?=\\s*,|\\s*$)`, 'g');
+    textarea.value = textarea.value.replace(pattern, (match, p1, p2, p3) => {
+      return p1;
+    }).replace(/(,\s*){2,}/g, ', ').replace(/^\s*,/g, '');
 
     updateInput(textarea)
   }
