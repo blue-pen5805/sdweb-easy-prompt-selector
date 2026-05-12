@@ -93,7 +93,11 @@ class Script(scripts.Script):
         if (is_img2img):
             return None
 
-        reload_button = gr.Button('🔄', variant='secondary', size="sm", elem_id='easy_prompt_selector_reload_button')
+        reload_button = gr.Button('🔄', variant='secondary', elem_id='easy_prompt_selector_reload_button')
+        if hasattr(reload_button, 'style'):
+            reload_button.style(size='sm')
+        else:
+            reload_button.size = 'sm'
         to_negative = gr.Checkbox(label="ネガティブプロンプトに入力", value=False, elem_id='eps_to_negative_checkbox')
 
         def reload():
