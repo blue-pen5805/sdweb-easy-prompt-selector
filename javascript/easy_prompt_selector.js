@@ -92,8 +92,9 @@ class EPSElementBuilder {
 
   static checkbox(text, { onChange }) {
     const wrapper = gradioApp().querySelector('#eps_to_negative_checkbox');
-    const checkbox = wrapper?.querySelector('input[type=checkbox]');
+    if (!wrapper) return document.createElement('div');
 
+    const checkbox = wrapper?.querySelector('input[type=checkbox]');
     checkbox?.addEventListener('change', (e) => {
       onChange(e.target.checked);
     });
