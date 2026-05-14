@@ -91,24 +91,15 @@ class EPSElementBuilder {
   }
 
   static checkbox(text, { onChange }) {
-    const label = document.createElement('label')
-    label.style.display = 'flex'
-    label.style.alignItems = 'center'
+    const wrapper = gradioApp().querySelector('#eps_to_negative_checkbox');
+    if (!wrapper) return document.createElement('div');
 
-    const checkbox = gradioApp().querySelector('input[type=checkbox]').cloneNode()
-    checkbox.checked = false
-    checkbox.addEventListener('change', (event) => {
-       onChange(event.target.checked)
-    })
+    const checkbox = wrapper?.querySelector('input[type=checkbox]');
+    checkbox?.addEventListener('change', (e) => {
+      onChange(e.target.checked);
+    });
 
-    const span = document.createElement('span')
-    span.style.marginLeft = 'var(--size-2, 8px)'
-    span.textContent = text
-
-    label.appendChild(checkbox)
-    label.appendChild(span)
-
-    return label
+    return wrapper;
   }
 }
 
@@ -134,6 +125,13 @@ class EasyPromptSelector {
     if (tagArea != null) {
       this.visible = false
       this.changeVisibility(tagArea, this.visible)
+
+      const negchk = tagArea.querySelector('#eps_to_negative_checkbox');
+      const reloadBtn = gradioApp().getElementById('easy_prompt_selector_reload_button');
+      if (negchk && reloadBtn && reloadBtn.parentNode) {
+        reloadBtn.parentNode.insertBefore(negchk, reloadBtn);
+      }
+
       tagArea.remove()
     }
 
