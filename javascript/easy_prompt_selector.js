@@ -125,6 +125,13 @@ class EasyPromptSelector {
     if (tagArea != null) {
       this.visible = false
       this.changeVisibility(tagArea, this.visible)
+
+      const negchk = tagArea.querySelector('#eps_to_negative_checkbox');
+      const reloadBtn = gradioApp().getElementById('easy_prompt_selector_reload_button');
+      if (negchk && reloadBtn && reloadBtn.parentNode) {
+        reloadBtn.parentNode.insertBefore(negchk, reloadBtn);
+      }
+
       tagArea.remove()
     }
 
